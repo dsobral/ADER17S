@@ -148,9 +148,9 @@ For this, we are providing small example datasets and exercises that participant
 
 ## Detailed Program
 
-TODO: Links to the material...
+TODO: Links to the material
 
-###Monday, December 4th
+### Monday, December 4th
 
 + 09:30 - 10:00 Introduction to the course and self presentation of the participants
 + 10:00 - 11:00 Possibilities and limitations of NGS sequencing technologies. Choose adequate sequencing for your biological question
@@ -161,7 +161,7 @@ TODO: Links to the material...
 + 16:00 - 16:30 ***Tea Break***
 + 16:30 - 18:00 What is a reference genome, versioning and where to obtain genomes. Alignment software: hisat2; bwa; salmon. Run an alignment: the SAM/BAM alignment format.
 
-###Tuesday, December 5th
+### Tuesday, December 5th
 
 + 09:30 - 10:00 Morning Wrap-up (what have we done so far?)
 + 10:00 - 11:00 Visualizing alignments in IGV for single genes.
@@ -173,7 +173,7 @@ TODO: Links to the material...
 + 16:30 - 18:00 Using the R package edgeR and DESeq2 in Galaxy to produce a pairwise differential expression analysis
 
 
-###Wednesday, December 6th
+### Wednesday, December 6th
 
 + 09:30 - 10:00 Morning Wrap-up (what have we done so far?)
 + 10:00 - 11:00 Use edgeR and DESeq2 in R and RStudio. 
@@ -185,7 +185,7 @@ TODO: Links to the material...
 + 16:30 - 18:00 Use more complex settings: Generalized Linear Models
 
 
-###Thursday, December 7th
+### Thursday, December 7th
 
 + 09:30 - 10:00 Morning wrap-up (what have we done so far?)
 + 10:00 - 11:00 Use more complex settings: Generalized Linear Models
