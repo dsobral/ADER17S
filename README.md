@@ -55,18 +55,18 @@ For this, we are providing small example datasets and exercises that participant
 ### LO 1 - Plan your experiment using NGS technologies:
 
 ####	LO 1.1 - List possibilities and limitations of NGS sequencing technologies
-		Question: What choices do you have when sending your samples to the sequencing facility?
+		What choices do you have when sending your samples to the sequencing facility?
 
 ####	LO 1.2 - Choose adequate sequencing for your biological question
-		Question: How do the sequencing choices influence the kind of questions you can answer?
+		How do the sequencing choices influence the kind of questions you can answer?
 
 ### LO 2 - List steps in the analysis of RNA-Seq differential expression experiments
-		Question: What are the steps in RNA-Seq data analysis
+		What are the steps in RNA-Seq data analysis
 
 ### LO 3 - Assess the general quality of the raw data from the sequencing facility
 
 #### 	LO 3.1 - Interpret what are fastq files and what is their content
-		Question: What information is in fastq files, and how is it organized?
+		What information is in fastq files, and how is it organized?
 
 #### 	LO 3.2 - Use software like FastQC to process fastq files and produce QC reports
 
@@ -89,21 +89,21 @@ For this, we are providing small example datasets and exercises that participant
 ### LO 5 - Generate alignments of processed reads against a reference genome
 
 #### 	LO 5.1 - What is a reference genome, versioning and where to obtain genomes
-		Question: Are genomes constant?
+		Are genomes constant?
 		Obtain genome fasta from Ensembl
 
 #### 	LO 5.2 - Alignment software: tophat2/hisat2; bwa; sailfish/salmon
-		Question: what are the conditions of using burrows-wheeler approaches?	
+		What are the conditions of using burrows-wheeler approaches?	
 		Prepare a reference genome to use with hisat2 and bwa
 
 #### 	LO 5.3 - Run an alignment: the SAM/BAM alignment format
 		Run hisat2 / bwa mem in an example dataset
-		Question: what is the SAM format; what is the BAM format?
+		What is the SAM format; what is the BAM format?
 	
 ### LO 6 - Assess the general quality of the alignments and detect possible problems
 
 #### 	LO 6.1 - What is a reference gene annotation, versioning and where to obtain
-		Question: what is the GFF/GTF format?
+		What is the GFF/GTF format?
 		Obtain genome GTF from Ensembl
 			
 #### 	LO 6.2 - Visualizing alignments in IGV for single genes
@@ -115,7 +115,7 @@ For this, we are providing small example datasets and exercises that participant
 ### LO 7 - Generate tables of counts using the alignment and a reference gene annotation
 
 #### 	LO 7.1 - The process of generating gene counts from genome aligments
-		Question: what parameters we need to consider when counting?
+		What parameters we need to consider when counting?
 
 #### 	LO 7.2 - Use tools such as htseq-counts and featurecounts to generate table of gene counts
 
@@ -140,7 +140,7 @@ For this, we are providing small example datasets and exercises that participant
 		What are functional annotations, what types exist, and where to get them
        
 #### 	LO 9.2 - Understand the concept of functional enrichment analysis, and the statistics involved
-		Question: when and why do we need multiple test corrections?
+		When and why do we need multiple test corrections?
 
 #### 	LO 9.3 - Interpreting the results of functional enrichment analysis
 		Using functional enrichment analysis with your lists of genes
