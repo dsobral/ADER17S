@@ -6,7 +6,7 @@ A hands-on training course at Instituto Gulbenkian de Ciência (4-days)
 
 Official course page of the Gulbenkian Training Programme in Bioinformatics - GTPB
 
-![logo](GTPB2015logo.png)
+![logo](https://github.com/dsobral/ADER17S/raw/master/Logo_IGC_2014.png "IGC")
 
 http://gtpb.igc.gulbenkian.pt/bicourses/ADER17S/
 
