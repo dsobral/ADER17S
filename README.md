@@ -52,29 +52,29 @@ For this, we are providing small example datasets and exercises that participant
 
 ## Learning outcomes (LO) for each unit:
 
-	LO 1 - Plan your experiment using NGS technologies:
+### LO 1 - Plan your experiment using NGS technologies:
 
-		LO 1.1 - List possibilities and limitations of NGS sequencing technologies
-			Question: What choices do you have when sending your samples to the sequencing facility?
+####	LO 1.1 - List possibilities and limitations of NGS sequencing technologies
+		Question: What choices do you have when sending your samples to the sequencing facility?
 
-		LO 1.2 - Choose adequate sequencing for your biological question
-			Question: How do the sequencing choices influence the kind of questions you can answer?
+####	LO 1.2 - Choose adequate sequencing for your biological question
+		Question: How do the sequencing choices influence the kind of questions you can answer?
 
-	LO 2 - List steps in the analysis of RNA-Seq differential expression experiments
-		Question: What are the steps in RNA-Seq data analysis
+### LO 2 - List steps in the analysis of RNA-Seq differential expression experiments
+	Question: What are the steps in RNA-Seq data analysis
 
-	LO 3 - Assess the general quality of the raw data from the sequencing facility
+### LO 3 - Assess the general quality of the raw data from the sequencing facility
 
-		LO 3.1 - Interpret what are fastq files and what is their content
-			Question: What information is in fastq files, and how is it organized?
+#### 	LO 3.1 - Interpret what are fastq files and what is their content
+		Question: What information is in fastq files, and how is it organized?
 
-		LO 3.2 - Use software like FastQC to process fastq files and produce QC reports
+#### 	LO 3.2 - Use software like FastQC to process fastq files and produce QC reports
 
-		LO 3.3 - Read QC reports of raw data to assess the general quality of data and presence of sequence bias
-			Detect low quality bases in the QC reports
-			Detect sequence bias and possible presence of adaptors and other contaminants
+#### 	LO 3.3 - Read QC reports of raw data to assess the general quality of data and presence of sequence bias
+		Detect low quality bases in the QC reports
+		Detect sequence bias and possible presence of adaptors and other contaminants
 
-	LO 4 - Do simple processing operations in the raw data to improve its quality
+### LO 4 - Do simple processing operations in the raw data to improve its quality
 
 		LO 4.1 - Use tools such as seqtk and trimmomatic to remove low quality bases from your reads
 			Use seqtk to remove a fixed number of bases from either ends of a fastq
