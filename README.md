@@ -37,15 +37,15 @@ Basic Unix command line skills, such as being able to navigate in a directory tr
 
 Course participants will go through a series of experiences that utimately lead to create enhanced capabilities to:
 
-	1. List broad characteristics of NGS technologies and choose adequate sequencing for your biological question
-	2. Have a broad overview of the steps in the analysis of RNA-Seq differential expression experiments
-	3. Assess the general quality of the raw data from the sequencing facility
-	4. Do simple processing operations in the raw data to improve its quality
-	5. Generate alignments against a reference genome
-	6. Assess the general quality of the alignments and detect possible problems
-	7. Generate tables of counts using the alignment and a reference gene annotation
-	8. Generate lists of differentially expressed genes, at least for a simple pairwise comparison
-	9. Perform simple functional enrichment analysis and understand the concepts behind them
+1. List broad characteristics of NGS technologies and choose adequate sequencing for your biological question
+2. Have a broad overview of the steps in the analysis of RNA-Seq differential expression experiments
+3. Assess the general quality of the raw data from the sequencing facility
+4. Do simple processing operations in the raw data to improve its quality
+5. Generate alignments against a reference genome
+6. Assess the general quality of the alignments and detect possible problems
+7. Generate tables of counts using the alignment and a reference gene annotation
+8. Generate lists of differentially expressed genes, at least for a simple pairwise comparison
+9. Perform simple functional enrichment analysis and understand the concepts behind them
 
 For this, we are providing small example datasets and exercises that participants can use to learn. 
 
