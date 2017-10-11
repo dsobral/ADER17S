@@ -1,4 +1,4 @@
-### Learning Outcome 1: Plan your experiment using NGS technologies
+### <a id="LO1">Learning Outcome 1: Plan your experiment using NGS technologies</a>
 
 A good source of information for this part is [RNA-seqlopedia](http://rnaseq.uoregon.edu).
 
@@ -14,7 +14,7 @@ Finally, we also need to consider the amount of material available. Are we deali
 
 All these aspects need to be taken into consideration when analyzing the data.
 
-#### <a id="LO1">Options for sequencing</a>
+#### Options for sequencing
 
 At the moment, the sequencing technology most often used (by far) is Illumina. The following links are a good source of information regarding this sequencing technology:
 * [Illumina Sequencing by Synthesis](https://www.youtube.com/watch?&v=fCd6B5HRaZ8).
@@ -29,10 +29,10 @@ For the analysis of differential gene expression, long reads, paired-end, and st
 
 For this course, we will focus on the analysis of differential gene expression between two conditions. Thus, we assume unstranded mRNA-specific library preparation methods, sequenced using illumina (NextSeq, HiSeq) short (less than 100bp) single-end reads. We also assume 2-3 replicates per condition, sequenced to a medium throughput (10-40M reads). We will nonetheless briefly discuss what to do in other cases such as longer reads, paired data, stranded data, and more complex differential expression conditions. 
 
-### Learning Outcome 2: List steps in the analysis of RNA-Seq differential expression experiments
+### <a id="LO2">Learning Outcome 2: List steps in the analysis of RNA-Seq differential expression experiments</a>
 
 Steps in the analysis of RNA-Seq:
-* QC of Raw Data; (Learning Outcome 3)
+* QC of Raw Data; ([Learning Outcome 3](#LO3))
 * Preprocessing of Raw Data (if needed); (Learning Outcome 4) 
 * Alignment of “clean” reads to reference genome (Learning Outcome 5)
 * QC of Aligments (Learning Outcome 6)
@@ -40,9 +40,9 @@ Steps in the analysis of RNA-Seq:
 * Differential Analysis tests (Learning Outcome 8)
 * Post-analysis: Functional Enrichment (Learning Outcome 9)
 
-# Learning Outcome 3: Assess the general quality of the raw data from the sequencing facility
+# <a id="LO3">Learning Outcome 3: Assess the general quality of the raw data from the sequencing facility</a>
 
-## LO 3.1 - Interpret what are fastq files and what is their content
+## <a id="LO3.1">LO 3.1 - Interpret what are fastq files and what is their content</a>
 
 Most high-throughput sequencing (HTS) machines output [fastq files](https://en.wikipedia.org/wiki/FASTQ_format), the “de facto” current standard in HTS. Fastq files are simply text files, where each block of information (a sequenced DNA fragment, or read) in this format is encoded as 4 lines:
 
