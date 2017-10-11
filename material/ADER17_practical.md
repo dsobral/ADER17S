@@ -14,7 +14,7 @@ Finally, we also need to consider the amount of material available. Are we deali
 
 All these aspects need to be taken into consideration when analyzing the data.
 
-#### Options for sequencing
+#### <a id="LO1">Options for sequencing</a>
 
 At the moment, the sequencing technology most often used (by far) is Illumina. The following links are a good source of information regarding this sequencing technology:
 * [Illumina Sequencing by Synthesis](https://www.youtube.com/watch?&v=fCd6B5HRaZ8).
