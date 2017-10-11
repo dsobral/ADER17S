@@ -34,11 +34,11 @@ For this course, we will focus on the analysis of differential gene expression b
 Steps in the analysis of RNA-Seq:
 * QC of Raw Data; ([Learning Outcome 3](#LO3))
 * Preprocessing of Raw Data (if needed); ([Learning Outcome 4](#LO4)) 
-* Alignment of “clean” reads to reference genome (Learning Outcome 5)
-* QC of Aligments (Learning Outcome 6)
-* Generate table of counts of genes/transcripts (Learning Outcome 7)
-* Differential Analysis tests (Learning Outcome 8)
-* Post-analysis: Functional Enrichment (Learning Outcome 9)
+* Alignment of “clean” reads to reference genome ([Learning Outcome 5](#LO5))
+* QC of Aligments ([Learning Outcome 6](#LO6))
+* Generate table of counts of genes/transcripts ([Learning Outcome 7](#LO7))
+* Differential Analysis tests ([Learning Outcome 8](#LO8))
+* Post-analysis: Functional Enrichment ([Learning Outcome 9](#LO9))
 
 # <a id="LO3">Learning Outcome 3: Assess the general quality of the raw data from the sequencing facility</a>
 
@@ -79,7 +79,7 @@ High Throughput Sequencing machines read thousands or millions of sequences in p
 **Task**: In Galaxy, run FastQC in each of the example files.
 
 
-## LO 3.3 - Read QC reports of raw data to assess the general quality of data and presence of sequence bias
+## <a id="LO3.3">LO 3.3 - Read QC reports of raw data to assess the general quality of data and presence of sequence bias</a>
 
 FastQC reports provide a series of plots that allow the user to assess the overall quality of their raw data and detect potential biases and problems. 
 
@@ -93,14 +93,14 @@ Other plots indicate biases in nucleotidic content of reads, either globally (as
 
 **Task**: Inspect the FastQC Reports generated previously and detect potential issues.
 
-# Learning Outcome 4: Do simple processing operations in the raw data to improve its quality
+# <a id="LO4">Learning Outcome 4: Do simple processing operations in the raw data to improve its quality</a>
 
 In most cases, particularly if you're sequencing short, single-end reads, the quality of your raw data is good enough to continue without any preprocessing. In fact, if you send your sequencing to an external facility, they often do these verifications and filtering for you, and you have “clean” sequences in the end. Nonetheless, it is always better to check before proceeding. 
 
 Sometimes things can go wrong, and you may need to do something about it. Some types of problems, like presence of contaminants, or some instances of positional bias will require to go back and redo the experiments. Other issues can be minimized. 
 
 
-## LO 4.1 - Use tools such as seqtk and trimmomatic to remove low quality bases from your reads
+## <a id="LO4.1">LO 4.1 - Use tools such as seqtk and trimmomatic to remove low quality bases from your reads</a>
 
 As you may have noticed before, reads tend to lose quality towards their end, where there is a higher probability of erroneous bases being called. To avoid problems in subsequent analysis, you should remove regions of poor quality in your read, usually by trimming them from the end of reads using tools such as [seqtk](https://github.com/lh3/seqtk). 
 
@@ -114,7 +114,7 @@ Another popular tool to filter fastq files is [Trimmomatic](http://www.usadellab
 
 **Task**: In Galaxy, use Trimmomatic to remove low quality bases from the example datasets. Notice that the default method in Trimmomatic is a 4bp window average, with a threshold of Q=20. Finally, look at the impact using FastQC of trimmed reads. NOTE: Trimmomatic requires you to specify that you use the "standard" Phred Q scale (fastqsanger), which was different from the one used in older datasets (before 2012), so you need to manually change the datatype of your dataset from generic fastq to fastqsanger.
 
-## LO 4.2 - Use tools such as cutadapt to remove adaptors and other artefactual sequences from your reads
+## <a id="LO4.2">LO 4.2 - Use tools such as cutadapt to remove adaptors and other artefactual sequences from your reads</a>
 
 Sequence machines often require that you add specific sequences (adaptors) to your DNA so that it can be sequenced. For many different reasons, such sequences may end up in your read, and you usually want to remove these adaptors. Moreover, cDNAs may contain parts of the non-genomic polyA tails that are part of mature mRNAs. Since these sequences are not part of the genome, they may prevent proper alignment and need to be removed before proceeding.
 
@@ -132,11 +132,11 @@ Task: Use Trimmommatic to do quality filtering and adaptor trimming in sample_qu
 
 **Task**: Finally, inspect a complete dataset (your own, or some we provided). First, use FastQC to detect potential issues. If necessary, use Trimmomatic (or any of the other tools we tried).
 
-# Learning Outcome 5: Generate alignments of processed reads against a reference genome
+# <a id="LO5">Learning Outcome 5: Generate alignments of processed reads against a reference genome</a>
 
 We've checked the quality of our raw data, and did any necessary preprocessing, so we should now be ready to use it. 
 
-## LO 5.1 - What is a reference genome, versioning and where to obtain genomes
+## <a id="LO5.1">LO 5.1 - What is a reference genome, versioning and where to obtain genomes</a>
 
 We now need to align the reads against a reference genome. Genomes were (and are still) usually obtained through the efforts of large consortia, which eventually create portals that make the data available for the scientific community. [ENSEMBL](http://www.ensembl.org) (in Europe) and [UCSC genome browser](http://genome.ucsc.edu/) (in the US) emerged first as resources to display and explore the human data, and latter agglomerated data for other model and non-model organisms, making them very convenient resources for high quality genomes. 
 
@@ -148,7 +148,7 @@ Finally, another alternative is to use cDNA sequences directly as a reference. T
 
 **Task**: Obtain genomic fasta for Drosophila melanogaster from the Ensembl website. Finally, also download a fasta with cDNA. Take note of the Ensembl version, as well as the version of your genome (in case later you wano to integrate data that is not from Ensembl). Obtain genomic and cDNA fasta from ENSEMBL for the species relevant for your complete dataset.
 
-## LO 5.2 - Alignment software: hisat; bwa; salmon
+## <a id="LO5.2">LO 5.2 - Alignment software: hisat; bwa; salmon</a>
 
 To be able to align millions of short reads to a (sometimes large) reference genome, novel, more efficient, alignment methods had to be developed. The most popular are based on the [burrows-wheeler transform](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform), of which [bwa](http://bio-bwa.sourceforge.net/) and [bowtie](http://bowtie-bio.sourceforge.net/index.shtml) are examples. They enable alignment of millions of reads in a few minutes, even in a common laptop.  
 
@@ -160,7 +160,7 @@ Eukaryotes contain the extra complication of splicing, where your read will be s
 
 Finally, another set of more recent approaches quickly gaining in popularity align directly against the transcriptome, without the need for a reference genome. [Salmon](https://combine-lab.github.io/salmon/) provides transcript-level estimates of gene expression. These methods are very fast (mostly because they only align against the transcriptome), and use more elaborate statistical methods to handle the presence of different alternative splice forms that difficult the attribution of a read to a transcript. Some of these methods, such as salmon, also take explicitly in consideration bias related to differences in transcript length and nucleotide composition. 
 
-## LO 5.3 - Run an alignment: the SAM/BAM alignment format
+## <a id="LO5.3">LO 5.3 - Run an alignment: the SAM/BAM alignment format</a>
 
 As we mentioned before, aligners for NGS data depend on large data structures for their efficiency. These structures (like the blast databases) are built from the fasta file containing the sequence of the reference genome. This process is relatively slow and computationally intensive, although it is only necessary to do it once for every reference genome. Therefore, before aligning your reads, it is necessary to do an indexing step on the genome sequence that will be used for alignment. If using the tools on the command line, one needs to explicitly perform this step. Using services such as Galaxy, this step is hidden from the user. 
 
@@ -180,9 +180,9 @@ Most genomes (particularly mamallian genomes) contain areas of low complexity, c
 
 Salmon directly estimates transcript expression (not alignments), and thus we will come back to it later on.
 
-# Learning Outcome 6: Assess the general quality of the alignments and detect possible problems
+# <a id="LO6">Learning Outcome 6: Assess the general quality of the alignments and detect possible problems</a>
 
-## LO 6.1 - What is a reference gene annotation, versioning and where to obtain
+## <a id="LO6.1">LO 6.1 - What is a reference gene annotation, versioning and where to obtain</a>
 
 To estimate gene expression, we need to define the genes by identifying their position and structure in the genome. This information is stored 
 in a hierarchical fashion (the genes, their transcripts, each transcript's exons, and so on...) in formats such as the [Generic Feature Format (GFF) files](http://gmod.org/wiki/GFF3). These consist basically of tabular text files with positions of genes (and their components) in the genome (for a specific genome version), as well as other information about the gene such as its name. Another common format used for annotations is the [BED format](http://genome.ucsc.edu/FAQ/FAQformat.html#format1). 
@@ -196,7 +196,7 @@ The same way ENSEMBL is a good source for the genome sequence, it is also a good
 **Task**: Obtain the latest Drosophila melanogaster GTF from Ensembl, as well as the GTF for the organism relevant for your complete dataset.
 
 
-## LO 6.2 - Visualizing alignments in IGV for single genes
+## <a id="LO6.2">LO 6.2 - Visualizing alignments in IGV for single genes</a>
 
 To visualize the alignments along the reference genome one can use software such as [IGV](http://software.broadinstitute.org/software/igv/) or [Tablet](https://ics.hutton.ac.uk/tablet/), which work with the most common operating systems. To avoid loading all alignments simultaneously in memory, and to be able to quickly search for region-specific alignments, this software uses the BAM format. 
 
@@ -210,7 +210,7 @@ To visualize the alignments along the reference genome one can use software such
 **Task**: Download the BAM files you generated for your complete dataset, and load in IGV. Don't forget to also download the companion bai index files. Also, don't forget you first need to load an appropriate genome of reference and gene annotation (GTF file) that you should have downloaded previously.
 
 
-## LO 6.3 - Use tools such as RSeQC and Qualimap to assess quality of alignments
+## <a id="LO6.3">LO 6.3 - Use tools such as RSeQC and Qualimap to assess quality of alignments</a>
 
 After generating alignments and obtaining a SAM/BAM file, how do I know this step went well? In fact, there are potential issues that we can only detect after we try to align against the reference genome. The same way FastQC generates reports of fastq files to assess quality of raw data, there are programs that generate global reports on the quality of alignments. One popular tool for this is [qualimap](http://qualimap.bioinfo.cipf.es/). 
 
@@ -228,9 +228,9 @@ Finally, there are reports specific for RNA-Seq which depend on gene annotation.
 
 **Task**: Produce Qualimap (outside Galaxy) and RSseQC (in Galaxy) reports for the alignments you generated with your complete datasets. Some RSeqQC reports may take some time, so take care to run only one at a time during the day in Galaxy (similar to the alignments).
 
-# Learning Outcome 7: Generate tables of counts using the alignment and a reference gene annotation
+# <a id="LO7">Learning Outcome 7: Generate tables of counts using the alignment and a reference gene annotation</a>
 
-## LO 7.1 - The process of generating gene counts from genome aligments
+## <a id="LO7.1">LO 7.1 - The process of generating gene counts from genome aligments</a>
 
 To perform differential expression analysis we need to count, for each sample, how many times a different transcript/gene is read. If we align directly against the transcriptome, we just need to count the number of alignments per gene/transcript. However, if there are many alternative transcripts, aligning will become difficult. One solution may be to use just one representative transcript, or the union of all transcripts to represent the gene, although this also has issues.
 
@@ -241,7 +241,7 @@ Thus, it is usually preferable that a read will count for a gene only if it over
 Finally, how to avoid pcr artifacts? To be as safe as possible, we would remove duplicates to avoid pcr artifacts, and this frequently needs to be done before the counting process. Nonetheless, given that duplicates can be frequent in RNA-Seq, usually we do not remove them. Assuming that pcr artifacts occurr randomly, then we should not have the same artifact in different biological replicates. In any case, for genes that are very important to use, we should always also visually check the alignments using software such as IGV.
 
 
-## LO 7.2 - Use tools such as htseq-counts to generate table of gene counts
+## <a id="LO7.2">LO 7.2 - Use tools such as htseq-counts to generate table of gene counts</a>
 
 A popular tool to generate these counts from SAM/BAM alignments and GFF/GTF gene annotations is [htseq-count](http://www-huber.embl.de/HTSeq). Its default behavior is to generate counts at the gene level. It assigns a read to a gene if it unambiguously overlaps at least one part of a cDNA produced by the gene. It ignores reads mapping equally well to multiple positions by requiring by default a minimum mapping quality. By default it assumes stranded libraries, so we need to explicitly mention unstranded. 
 
@@ -252,9 +252,9 @@ A popular tool to generate these counts from SAM/BAM alignments and GFF/GTF gene
 **Task**: Run htseq-count (and/or Qualimap counts) and salmon for your complete dataset. Similarly to the alignments, only run one at a time during the course and if necessariy leave them all running overnight.
 
 
-# Learning Outcome 8: Generate lists of differentially expressed genes, at least for a simple pairwise comparison
+# <a id="LO8">Learning Outcome 8: Generate lists of differentially expressed genes, at least for a simple pairwise comparison</a>
 
-## LO 8.1 - Using the R packages edgeR and DESeq2 to produce a pairwise differential expression analysis
+## <a id="LO8.1">LO 8.1 - Using the R packages edgeR and DESeq2 to produce a pairwise differential expression analysis</a>
 
 The analysis methods currently most commonly used to perform RNA-Seq differential gene expression analysis start from non-normalized raw read counts like what we obtained previously (note that Salmon is not exactly like this). Given that sequencing data is based on discrete counts, most of these popular methods are based on derivations of the binomial distribution. Similarly to microarrays, there are many available tools to perform these analysis using the R language (such as [edger](https://bioconductor.org/packages/release/bioc/html/edgeR.html) and [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html)).
 
@@ -267,7 +267,7 @@ To calculate differentially expressed genes, we need to take into consideration 
 We then test each gene for differential expression, and we obtain a probability for the test. Since we test thousands of genes, some genes may get good p-values just by chance. One way of avoiding this is by multiplying the p-value by the number of tests (a method called Bonferroni correction). This is nonetheless too strict and we usually end up not having anything differentially expressed. Other methods . We will look into more detail on this when we discuss functional enrichment analysis. In the end of a DESeq2 or edgeR analysis, instead of looking at the p-value, we should rather look at the corrected p-value (FDR, or qvalue) for significance. Finally, another way of minimizing the number of tests is to filter out the genes that have very low expression in all samples. 
 
 
-## LO 8.2 - Interpretation and visualization of results
+## <a id="LO8.2">LO 8.2 - Interpretation and visualization of results</a>
 
 **Task**: In Galaxy, use DESeq2 with the htseq-count results you obtained previously for the guilgur data. Perform a simple parwise Wild-Type versus Mutant comparison with two replicates each. Look at the differentially expressed genes.
 
@@ -280,7 +280,7 @@ DESeq2 and edgeR also plot the estimates of the biological coefficient of variat
 Unfortunately, Galaxy does not produce gene-centered plots, and for those we may need to go to other software such as R. Nonetheless, the Galaxy tools output tables with normalized values that can be used for plotting in any type of software.
 
 
-## LO 8.3 - Use more complex settings: Generalized Linear Models
+## <a id="LO8.3">LO 8.3 - Use more complex settings: Generalized Linear Models</a>
 
 So far, we just considered the simple case of pairwise comparison, where all samples are independent. But we may have cases where the samples are not independent. For example, in case of cancer, it is common (and desirable) to have tumor tissue and normal tissue for the same individual. In this case, we have paired information that needs to be taken into account in the test. There can also be other variables (eg. samples were prepared in different batches) that may confound the differential expression analysis. 
 
@@ -302,9 +302,9 @@ The final example we will explore contains several factors, and one of the facto
 
 **Task**: Based on what you did before, prepare a table of non-normalized counts for your complete dataset and analyse it using edgeR in R. 
 
-# Learning Outcome 9 - Perform simple functional enrichment analysis and understand the concepts involved
+# <a id="LO9">Learning Outcome 9 - Perform simple functional enrichment analysis and understand the concepts involved</a>
 
-## LO 9.1 - How to extract meaning from a list of genes
+## <a id="LO9.1">LO 9.1 - How to extract meaning from a list of genes</a>
 
 A list of genes of “interest” produced by an ‘omics experiment (e.g., RNAseq, microarrays, proteomics, etc) is essentially meaningless: gene identifiers are opaque, and we’re generally interested in understanding phenomena at the cellular and/or organismal level, rather than the gene level. To do this, we must abstract from the genes to their functions, or whatever other aspect we’re interested in studying (e.g., the chromosome location of the genes, the transcription regulation networks, etc).
 In order to abstract to the functional level, we need functional descriptions of the genes. Furthermore, we need these descriptions to be consistent, i.e., we need all functional aspects to be described in the same manner for all genes that have those aspects − otherwise, we would be unable to integrate our gene set at the functional level. In short, we need genes to be annotated using a functional classification scheme.
@@ -323,7 +323,7 @@ Viewing the annotations of your gene set on an individual gene basis is unfeasib
 **Task**: Go to BioMart through Galaxy (Galaxy > Get Data > BioMart) and get the GO annotations for the mouse genome in tsv (Gene Stable ID; GO term accession). Download the latest version of GO from http://geneontology.org/ontology/go.obo and upload it into Galaxy.       
 
 
-## LO 9.2 - Understand the concept of functional enrichment analysis, and the statistics involved
+## <a id="LO9.2">LO 9.2 - Understand the concept of functional enrichment analysis, and the statistics involved</a>
 
 Functional enrichment analysis is the application of Fisher’s exact test to measure the statistical significance of the observed frequency of each functional annotation in a gene set. The test relies on computing the probability of said frequencies arising by chance, using the hypergeometric distribution.
 
@@ -358,7 +358,7 @@ There are several GO enrichment analysis tools available, for instance:
 Are there significantly enriched terms at 0.001 significance without multiple test corrections? And with the correction?
 
 
-## LO 9.3 - Interpreting the results of functional enrichment analysis
+## <a id="LO9.3">LO 9.3 - Interpreting the results of functional enrichment analysis</a>
 
 It is essential to keep in mind that **statistically significant does not mean biologically meaningful**.
 
