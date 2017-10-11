@@ -157,7 +157,7 @@ TODO: Links to the material
 + 11:00 - 11:30 ***Coffee Break***
 + 11:30 - 12:30 [Steps in the analysis of RNA-Seq differential expression experiments](material/ADER17_practical.md#LO2)
 + 12:30 - 14:00 ***LUNCH BREAK***
-+ 14:00 - 16:00 [Interpret what are fastq files and what is their content](material/ADER17_practical.md#LO3.1). Use software like FastQC to process fastq files and produce QC reports. Read QC reports of raw data to assess the general quality of data and presence of sequence bias. Use tools such as seqtk, cutadapt and trimmomatic to remove low quality bases, adaptors and other artefactual sequences from your reads.
++ 14:00 - 16:00 [Interpret what are fastq files and what is their content](material/ADER17_practical.md#LO3.1). [Use software like FastQC to process fastq files and produce QC reports](material/ADER17_practical.md#LO3.2). Read QC reports of raw data to assess the general quality of data and presence of sequence bias. Use tools such as seqtk, cutadapt and trimmomatic to remove low quality bases, adaptors and other artefactual sequences from your reads.
 + 16:00 - 16:30 ***Tea Break***
 + 16:30 - 18:00 What is a reference genome, versioning and where to obtain genomes. Alignment software: hisat2; bwa; salmon. Run an alignment: the SAM/BAM alignment format.
 
