@@ -241,7 +241,7 @@ Thus, it is usually preferable that a read will count for a gene only if it over
 Finally, how to avoid pcr artifacts? To be as safe as possible, we would remove duplicates to avoid pcr artifacts, and this frequently needs to be done before the counting process. Nonetheless, given that duplicates can be frequent in RNA-Seq, usually we do not remove them. Assuming that pcr artifacts occurr randomly, then we should not have the same artifact in different biological replicates. In any case, for genes that are very important to use, we should always also visually check the alignments using software such as IGV.
 
 
-## <a id="LO7.2">LO 7.2 - Use tools such as htseq-counts to generate table of gene counts</a>
+## <a id="LO7.2">LO 7.2 - Use tools such as htseq-counts and featurecounts to generate tables of gene counts</a>
 
 A popular tool to generate these counts from SAM/BAM alignments and GFF/GTF gene annotations is [htseq-count](http://www-huber.embl.de/HTSeq). Its default behavior is to generate counts at the gene level. It assigns a read to a gene if it unambiguously overlaps at least one part of a cDNA produced by the gene. It ignores reads mapping equally well to multiple positions by requiring by default a minimum mapping quality. By default it assumes stranded libraries, so we need to explicitly mention unstranded. 
 
