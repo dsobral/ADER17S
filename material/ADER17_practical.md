@@ -72,9 +72,11 @@ You can see a few fastq files in the folder fastq_examples:
 
 Since each fastq can have several million reads, they can become very big. Therefore, it is usual to keep them in a compressed format such as gzip. Most recent software dealing with NGS data can directly read compressed fastq files.
 
-**TASK**: In Firefox, click on the Galaxy bookmark to access your local Galaxy. Upload all sample files into Galaxy by clicking on the upload icon on the topleft, or by selecting the "Upload File" tool from the "Get Data" section in the tools menu.
+**TASK**: In Firefox, click on the Galaxy bookmark to access your local Galaxy. Upload all sample files into Galaxy by clicking on the upload icon ![upload](images/upload.jpg) on the topleft, or by selecting the "Upload File" tool from the "Get Data" section in the tools menu.
 
-You probably noticed that two of the example files have the same name, except for R1 and R2. This is an example of a paired-end dataset. If you inspect both datasets (by clicking on the eye button), you can find the same identifiers in each of the files, in the same order. In R1 you have the forward reading of a fragment, and in R2 you have the reverse reading of the same fragment.
+You probably noticed that two of the example files have the same name, except for R1 and R2. This is an example of a paired-end dataset. If you inspect both datasets (by clicking on the eye button ![eye](images/eye.jpg) ), you can find the same identifiers in each of the files, in the same order. In R1 you have the forward reading of a fragment, and in R2 you have the reverse reading of the same fragment.
+
+![Paired-end](images/paired-end.jpg)
 
 
 ## <a id="LO3.2">LO 3.2 - Use software like FastQC to process fastq files and produce QC reports</a>
