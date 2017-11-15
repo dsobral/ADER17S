@@ -22,7 +22,7 @@ At the moment, the sequencing technology most often used (by far) is Illumina. T
 
 ![NGS Workflow](images/NGSworkflow.jpg)
 
-Options to be considered when sequencing:
+Main options to be considered when sequencing:
 * Single versus Paired-end
 * Read Length
 * Coverage (number of reads)
@@ -72,9 +72,9 @@ You can see a few fastq files in the folder fastq_examples:
 
 Since each fastq can have several million reads, they can become very big. Therefore, it is usual to keep them in a compressed format such as gzip. Most recent software dealing with NGS data can directly read compressed fastq files.
 
-**Task**: Upload all sample files into Galaxy
+**TASK**: In Firefox, click on the Galaxy bookmark to access your local Galaxy. Upload all sample files into Galaxy by clicking on the upload icon on the topleft, or by selecting the "Upload File" tool from the "Get Data" section in the tools menu.
 
-You probably noticed that two of the example files have the same name, except for R1 and R2. This is an example of a paired-end dataset. If you inspect both datasets, you can find the same identifiers in each of the files, in the same order. In R1 you have the forward reading of a fragment, and in R2 you have the reverse reading of the same fragment.
+You probably noticed that two of the example files have the same name, except for R1 and R2. This is an example of a paired-end dataset. If you inspect both datasets (by clicking on the eye button), you can find the same identifiers in each of the files, in the same order. In R1 you have the forward reading of a fragment, and in R2 you have the reverse reading of the same fragment.
 
 
 ## <a id="LO3.2">LO 3.2 - Use software like FastQC to process fastq files and produce QC reports</a>
@@ -96,7 +96,7 @@ Other plots indicate biases in nucleotidic content of reads, either globally (as
 
 ![Base Bias](images/base_bias.png) ![Adaptor](images/adaptor.png)
 
-**Task**: Inspect the FastQC Reports generated previously and detect potential issues.
+**TASK**: Inspect the FastQC Reports generated previously and detect potential issues.
 
 **Question**: What is the main issue in sample_adaptors? 
 
@@ -104,9 +104,9 @@ Other plots indicate biases in nucleotidic content of reads, either globally (as
 
 **Question**: What is the main difference between R1 and R2 of the paired 20150821.A-2_BGVR_P218 sample?
 
-**Task**: Open a command line terminal. Type 'fastqc' to obtain the FastQC visual interface. Run FastQC in the example files.
+**TASK**: Open a command line terminal. Type 'fastqc' to obtain the FastQC visual interface. Run FastQC in the example files using the visual interface.
 
-**Task**: Open a command line terminal. Using the 'cd' command, go to the 'fastq_examples' folder. Type 'fastqc *.fastq.gz'. What results did you get?
+**TASK**: Open a command line terminal. Using the 'cd' command, go to the 'fastq_examples' folder. Type 'fastqc *.fastq.gz'. Look inside the folder. What results did you get?
 
 # <a id="LO4">Learning Outcome 4: Do simple processing operations in the raw data to improve its quality</a>
 
@@ -120,15 +120,15 @@ As you may have noticed before, reads tend to lose quality towards their end, wh
 
 **Question**: Even if all bases that your machine reads have a Q=20 (1% error rate), what is the probability that one 100bp read is completely correct? To answer this, consider also that all bases are read independently.
 
-**Task**: In Galaxy, use seqtk_trimfq with sample_quality_and_adaptors using 0.05 as an error threshold. Then use FastQC to evaluate the impact of the procedure. Compare this with the simpler approach of cutting your reads to a fixed length.
+**TASK**: In Galaxy, use seqtk_trimfq with sample_quality_and_adaptors using 0.05 as an error threshold. Then use FastQC to evaluate the impact of the procedure. Compare this with the simpler approach of cutting your reads to a fixed length.
 
-**Task**: In Galaxy, use seqtk_trimfq with sample_quality_and_adaptors using 0.01 as an error threshold. Then use FastQC to evaluate the impact of the procedure. Compare the result with using 0.05 as an error threshold.
+**TASK**: In Galaxy, use seqtk_trimfq with sample_quality_and_adaptors using 0.01 as an error threshold. Then use FastQC to evaluate the impact of the procedure. Compare the result with using 0.05 as an error threshold.
 
 **Question**: If you are too stringent, you may remove too many bases, but if you are too lenient, you may fall in local optima, because behind a good quality base may be more bad quality ones. What other strategies you can imagine to filter your reads?
 
 Another popular tool to filter fastq files is [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic). This tool implements more ellaborate trimming strategies, such as average window threshold.
 
-**Task**: In Galaxy, use Trimmomatic to remove low quality bases from sample_quality_and_adaptors. Notice that the default method in Trimmomatic is a 4bp window average, with a threshold of Q=20. Finally, look at the impact using FastQC of trimmed reads. NOTE: Trimmomatic requires you to specify that you use the "standard" Phred Q scale (fastqsanger), which was different from the one used in older datasets (before 2012), so you need to manually change the datatype of your dataset from generic fastq to fastqsanger (for this, click the Edit attributes buton - identified by a pencil - of the fastq file, then click on the "Datatype" tab and select fastqsanger - NOT fastqcssanger).
+**TASK**: In Galaxy, use Trimmomatic to remove low quality bases from sample_quality_and_adaptors. Notice that the default method in Trimmomatic is a 4bp window average, with a threshold of Q=20. Finally, look at the impact using FastQC of trimmed reads. NOTE: Trimmomatic requires you to specify that you use the "standard" Phred Q scale (fastqsanger), which was different from the one used in older datasets (before 2012), so you need to manually change the datatype of your dataset from generic fastq to fastqsanger (for this, click the Edit attributes buton - identified by a pencil - of the fastq file, then click on the "Datatype" tab and select fastqsanger - NOT fastqcssanger).
 
 ## <a id="LO4.2">LO 4.2 - Use tools such as cutadapt to remove adaptors and other artefactual sequences from your reads</a>
 
@@ -136,20 +136,25 @@ Sequencing machines often require that you add specific sequences (adaptors) to 
 
 To remove these unwanted sequences, not only you have to look for the sequence in the reads, but also allow for sequencing errors, as well as the presence of incomplete sequences. Tools such as [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html) do precisely this.
 
-**Task**: In Galaxy, use cutadapt to remove adaptors from sample_adaptors.fastq. In this sample, we know that we used the illumina adaptor GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT, so try to remove this from the 3' end of reads and see the impact of the procedure using FastQC. What happened? Almost no read was affected. This is because what you get is a readthrough, so you actually have the reverse complement of the adaptor. Now, try the same procedure but with AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC (reverse complement of the previous). Much better, no? 
+**TASK**: In Galaxy, use cutadapt to remove adaptors from sample_adaptors.fastq. In this sample, we know that we used the illumina adaptor GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT, so try to remove this from the 3' end of reads and see the impact of the procedure using FastQC. For this, you need to insert a new adapter in 3', and in the source, select "Enter a custom sequence" (you don't need to add a name, just paste the sequence). What happened? Almost no read was affected. This is because what you get is a readthrough, so you actually have the reverse complement of the adaptor. Now, try the same procedure but with AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC (reverse complement of the previous). Much better, no?
 
 One issue of removing the adaptors is that you need to know which ones were used in your data. FastQC can already tell you which one was used, and you can then go to the illumina manual to search for its sequence. Since Illumina is used most of the time, these adaptors are already integrated in tools like Trimmomatic, which also take in consideration issues like reverse complement. 
 
-**Task**: Use Trimmomatic to remove adaptors from sample_adaptors.fastq using Truseq adaptors and use FastQC to see the impact.
+**TASK**: In Galaxy, Use Trimmomatic to remove adaptors from sample_adaptors.fastq using Truseq adaptors (for this you need to select to perform an initial Illumina clip, then select the appropriate database of adaptors) and use FastQC to see the impact.
 
-**Task**: As you noticed, you can use Trimmommatic to do both quality and adaptor trimming. Use Trimmommatic to do quality filtering and adaptor trimming in sample_quality_and_adaptors.fastq (use Nextera adaptors).
+**TASK**: As you noticed, you can use Trimmommatic to do both quality and adaptor trimming. In Galaxy, use Trimmomatic to remove low quality bases from sample_quality_and_adaptors.fastq, as well as the remainings of illumina Nextera adaptors that are still left in some of the reads. Like before, you may need to change the type of file from fastq to fastqsanger.
 
 Paired-end data need to be handled with special care. Some quality filtering software will remove reads entirely if their quality is very bad. This can result in pairing information being lost, if the other member of the pair is not also removed (or placed in a special set of unpaired sequences). Software such as Trimmomatic can also take paired data as input, and handle them properly.
 
-**Task**: Use Trimmomatic with the 20150821.A-2_BGVR_P218 paired-end example RNA-Seq data (use Truseq adaptors). Use FastQC to evaluate the impact of the procedure. Notice that, if you use trimmomatic on each individual file, you'll lose the pairing information. Therefore, you need to provide the paired data to Trimmomatic. 
+**TASK**: Use Trimmomatic with the 20150821.A-2_BGVR_P218 paired-end example RNA-Seq data (use Truseq adaptors). Use FastQC to evaluate the impact of the procedure. If you use trimmomatic on each individual file, you'll lose the pairing information. Therefore, you need to provide the paired data to Trimmomatic. Notice that, beside a paired fastq file, you also obtain unpaired reads that lost their pair.
 
+**Question**: Which one has more reads - unpaired R1, or unpaired R2?
 
-#######TODO - Command line for this part: seqtk; cutadapt; trimmomatic
+**TASK**: Run the following command seqtk TODO.
+
+**TASK**: Run the following command cutadapt TODO.
+
+**TASK**: Run the following command trimmomatic TODO.
 
 
 # <a id="LO5">Learning Outcome 5: Generate alignments of processed reads against a reference genome</a>
@@ -168,7 +173,7 @@ It is fundamental to register the version of the genome used, as well as from wh
 
 Finally, another alternative is to use cDNA sequences directly as a reference. This is sometimes the only alternative, when full good quality genomes are not available. The presence of multiple alternative transcripts can make the alignment more difficult, but more recent approaches can actually take this information in consideration. We can also select collections of cDNAs that are relevant for our analysis (eg. focusing on protein-coding cDNAs, and/or choosing a single representative cDNA per gene).
 
-**Task**: Obtain genomic fasta for Drosophila melanogaster from the Ensembl website (click on the Downloads tab on the top, and then on Download data via FTP). Finally, also download a fasta with cDNA. Take note of the Ensembl version, as well as the version of your genome (in case later you want to integrate data that is not from Ensembl). Look for the genomic and cDNA fasta from ENSEMBL for the species relevant for your particular project, if you have one. Note that the main Ensembl site only contains data for vertebrate species, and a few other non-vertebrate species. Ensembl also has other sister sites for non-vertebrate species, namely bacteria, fungi, plants, metazoa, and protists. 
+**TASK**: Obtain genomic fasta for Drosophila melanogaster from the Ensembl website (click on the Downloads tab on the top, and then on Download data via FTP). Also download a fasta with cDNA. Take note of the Ensembl version, as well as the version of your genome (in case later you want to integrate data that is not from Ensembl). Look for the genomic and cDNA fasta from ENSEMBL for the species relevant for your particular project, if you have one. Note that the main Ensembl site only contains data for vertebrate species, and a few other non-vertebrate species. Ensembl also has other sister sites for non-vertebrate species, namely [bacteria](https://bacteria.ensembl.org), [fungi](https://fungi.ensembl.org/), [plants](https://plants.ensembl.org), [metazoa](https://metazoa.ensembl.org), and [protists](https://protists.ensembl.org). 
 
 ## <a id="LO5.2">LO 5.2 - Alignment software: hisat; bwa; salmon</a>
 
@@ -279,7 +284,7 @@ To perform differential expression analysis we need to count, for each sample, h
 
 What is most often done is to align against the genome, and compare the alignments (SAM/BAM) against the gene annotation (as GTF or BED). We could consider that a read counts to a gene if it overlaps with any part of the gene, but in large mammalian genomes, genes can have large introns, and it is not rare that genes overlap with each other. Moreover, the presence of DNA contamination and immature RNAs may also influence the counts.
 
-Thus, it is usually preferable that a read will count for a gene only if it overlaps to at least some part corresponding to a valid mRNA transcribed from that gene. Then, if we have strand information, we should use it to resolve other possible ambiguities. But there are stil other factors to take in consideration. What to do if a read maps equally well to multiple genome regions? This will now depends a bit on the behavior on the alignment software. Usually, these cases are marked as having a low mapping quality, so we can simply ignore them by excluding alignments with a low mapping quality. But byt ignoring these cases we're losing information, and in the case of large genomes with a lot of large duplicated regions, this can be problematic. Again, if we want to use this information, we need to take into consideration what the aligner software will do. For example, bwa randomly attributes a read to one of the sites, while hisat outputs all alignmens (up to a given limit of k equally good ones). Some counting tools will actually use the information that a read aligns to different places to estimate the likelihood that a read belongs to one or the other, depending on the local (unique) coverage. This is in fact the type of approach Salmon uses to attribute reads to transcripts. Salmon does not output an exact number of reads per transcript, but the sum of the likelihoods of reads belonging to it (eg. a read may have 60% likelihood of belonging to a transcript, and thus will count not as 1, but as 0.6).
+Thus, it is usually preferable that a read will count for a gene only if it overlaps to at least some part corresponding to a valid mRNA transcribed from that gene. Then, if we have strand information, we should use it to resolve other possible ambiguities. But there are stil other factors to take in consideration. What to do if a read maps equally well to multiple genome regions? This will now depends a bit on the behavior on the alignment software. Usually, these cases are marked as having a low mapping quality, so we can simply ignore them by excluding alignments with a low mapping quality. But by ignoring these cases we're losing information, and in the case of large genomes with a lot of large duplicated regions, this can be problematic. Again, if we want to use this information, we need to take into consideration what the aligner software will do. For example, bwa randomly attributes a read to one of the sites, while hisat outputs all alignmens (up to a given limit of k equally good ones). Some counting tools will actually use the information that a read aligns to different places to estimate the likelihood that a read belongs to one or the other, depending on the local (unique) coverage. This is in fact the type of approach Salmon uses to attribute reads to transcripts. Salmon does not output an exact number of reads per transcript, but the sum of the likelihoods of reads belonging to it (eg. a read may have 60% likelihood of belonging to a transcript, and thus will count not as 1, but as 0.6).
 
 Finally, how to avoid pcr artifacts? To be as safe as possible, we would remove duplicates to avoid pcr artifacts, and this frequently needs to be done before the counting process. Nonetheless, given that duplicates can be frequent in RNA-Seq, usually we do not remove them. Assuming that pcr artifacts occurr randomly, then we should not have the same artifact in different biological replicates. In any case, for genes that are very important to use, we should always also visually check the alignments using software such as IGV.
 
