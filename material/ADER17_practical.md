@@ -367,19 +367,21 @@ DESeq2 and edgeR also show the estimates of the biological coefficient of variat
 
 Finally, another type of common plot is the MA plots, which displays the log fold change between groups (M) versus the average normalized expression of genes (A). The "vulcano" plot is also commonly used, depicting logFC versus adjusted p-value. On top of these graphs it is common to signal the genes that were detected as differentially expressed under certain criteria.  
 
+![PLOT Volcano](images/volcano.jpg)
+
 **TASK**: In Galaxy, use DESeq2 to perform a pairwise comparison with the count results you obtained for the Trapnell dataset. Name the factor "Condition" and two factor variables "C1" and "C2", with 3 replicates each. Look at the different plots you obtain. (optional) Use DESeq2 on counts for your data, if you have.
 
 Finally, the result that we're usually most interested in is the table with the differential expression analysis. In the table resulting from a DESeq2 analysis comparing two groups, we have, for each gene, the mean normalized expression value among all samples, the reestimated log2 fold change, the estimated standard error, the wald statistic which indicates how far is the log fold change from the expected (0), the p-value indicating the probability that this fold change could be observed by chance, and the corrected (adjusted) p-value using Benjamini-Hochberg. One can now select genes of interest based on the adjusted p-value, and eventually on other factors such as the log2FC (we may want to prioritize genes with larger effect, although we should take the variation into consideration also).
 
 Unfortunately, Galaxy does not produce gene-centered plots, and for those we may need to go to other software such as R. Nonetheless, the Galaxy tools output tables with normalized values that can be used for plotting in any type of software.
 
-**TASK**:  TODO TODO : go to R for a first run.
+**TASK**:  TODO TODO : go to R for a first run. Create DESeq2 script??
 
 ## <a id="LO8.3">LO 8.3 - Use more complex settings: Generalized Linear Models</a>
 
 So far, we just considered the simple case of pairwise comparison, where all samples are independent. But we may have cases where the samples are not independent. For example, in case of cancer, it is common (and desirable) to have tumor tissue and normal tissue for the same individual. In this case, we have paired information that needs to be taken into account in the test. There can also be other variables (eg. samples were prepared in different batches) that may confound the differential expression analysis. 
 
-The [edgeR manual](https://www.bioconductor.org/packages/devel/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf) contains several examples that explore these issues. In the pairwise case, the statistical methods are comparable to a t-test or a fisher exact test. Generalized Linear Models (GLM) allow to include information from several variables simultaneously. The simple pairwise case can also be considered as a  GLM, although the statistical methods applied for the test are different than in the "classic" pairwise model. 
+The [edgeR manual](https://www.bioconductor.org/packages/devel/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf) contains several examples that explore these issues. In the pairwise case, the statistical methods are comparable to a t-test or a fisher exact test. Generalized Linear Models (GLM) allow to include information from several variables simultaneously. The simple pairwise case can also be considered as a GLM, although the statistical methods applied for the test are different than in the "classic" pairwise model. 
 
 In a first example, we have a classic paired test, with tumor and normal samples for one same case. In a second example, we have a treatment, but the samples were obtained in three different moments in time (batches), and this may influence the result.
 
