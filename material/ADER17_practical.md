@@ -282,12 +282,17 @@ Finally, there are reports specific for RNA-Seq which depend on gene annotation.
 
 The same way FastQC generates reports of fastq files to assess quality of raw data, there are programs that generate global reports on the quality of BAM alignments. One popular tool for this is [qualimap](http://qualimap.bioinfo.cipf.es/). 
 
-**TASK**: In the command line, type 'qualimap'. There may be some warnings about missing packages, don't worry about those. Produce an Rna-seq report with one of the BAM files from the Trapnell dataset. (optional) Try with one of your own samples, if you have them.
+**TASK**: In the command line, type 'qualimap'. There may be some warnings about missing packages, don't worry about those. From the Qualimap GUI, produce an Rna-seq report (File>New Analysis>RNA Seq QC) using one of the BAM files of the guilgur dataset. You'll need to use the example gtf file.
+
+**TASK**: Run the command in the guilgur folder: 'qualimap rnaseq -bam mut_lib1_R1.bam -gtf Drosophila_melanogaster.BGP6.85.sample.gtf'.
 
 [RSeqC](http://rseqc.sourceforge.net/) provide a set of tools to produce RNA-Seq specific reports.  
 
-**TASK**: (optional) In Galaxy run with one of the guilgur TODO TODO TODO. Then run with one of the Trapnell BAM files. Some RSeqQC reports may take time, so take care to run only one at a time during the day in Galaxy (similar to the alignments).
+**TASK**: In galaxy, run the tool 'Gene Body Coverage (BAM)' with mut_lib1 of the guilgur datasets. Use as reference 'Drosophila_melanogaster.BGP6.85.sample.bed'.
 
+**TASK**: Run the command in the guilgur folder: 'geneBody_coverage.py -r Drosophila_melanogaster.BGP6.85.sample.bed -i mut_lib1_R1.bam -o mut_lib1_R1.genebody'. Then, run also 'read_distribution.py  -i mut_lib1_R1.bam -r Drosophila_melanogaster.BGP6.85.sample.bed'.
+
+**TASK**: Run a Qualimap RNA-Seq report with one of the Trapnell BAM files (use the full Drosophila annotation). Try with your own samples, if you have them. (optional) Run the RSeQC gene body coverage and other reports. Some RSeqQC reports may take time with real datasets, so take care to run only one at a time during the day.
 
 # <a id="LO7">Learning Outcome 7: Generate tables of counts using the alignment and a reference gene annotation</a>
 
@@ -295,25 +300,38 @@ The same way FastQC generates reports of fastq files to assess quality of raw da
 
 To perform differential expression analysis we need to count, for each sample, how many times a different transcript/gene is read. If we align directly against the transcriptome, we just need to count the number of alignments per gene/transcript. However, if there are many alternative transcripts, aligning will become difficult. One solution may be to use just one representative transcript, or the union of all transcripts to represent the gene, although this also has issues.
 
-What is most often done is to align against the genome, and compare the alignments (SAM/BAM) against the gene annotation (as GTF or BED). We could consider that a read counts to a gene if it overlaps with any part of the gene, but in large mammalian genomes, genes can have large introns, and it is not rare that genes overlap with each other. Moreover, the presence of DNA contamination and immature RNAs may also influence the counts.
+What is most often done is to align against the genome, and compare the alignments (SAM/BAM) against the gene annotation (as GTF or BED). We could consider that a read counts to a gene if it overlaps with any part of the gene, but in large mammalian genomes, genes can have large introns, and it is not rare that genes overlap with each other. Moreover, the presence of DNA contamination and immature RNAs may also influence the counts. It is usually preferable that a read will count for a gene only if it overlaps to at least some part corresponding to a valid mRNA transcribed from that gene. Then, if we have strand information, we should use it to resolve other possible ambiguities. 
 
-Thus, it is usually preferable that a read will count for a gene only if it overlaps to at least some part corresponding to a valid mRNA transcribed from that gene. Then, if we have strand information, we should use it to resolve other possible ambiguities. But there are stil other factors to take in consideration. What to do if a read maps equally well to multiple genome regions? This will now depends a bit on the behavior on the alignment software. Usually, these cases are marked as having a low mapping quality, so we can simply ignore them by excluding alignments with a low mapping quality. But by ignoring these cases we're losing information, and in the case of large genomes with a lot of large duplicated regions, this can be problematic. Again, if we want to use this information, we need to take into consideration what the aligner software will do. For example, bwa randomly attributes a read to one of the sites, while hisat outputs all alignmens (up to a given limit of k equally good ones). Some counting tools will actually use the information that a read aligns to different places to estimate the likelihood that a read belongs to one or the other, depending on the local (unique) coverage. This is in fact the type of approach Salmon uses to attribute reads to transcripts. Salmon does not output an exact number of reads per transcript, but the sum of the likelihoods of reads belonging to it (eg. a read may have 60% likelihood of belonging to a transcript, and thus will count not as 1, but as 0.6).
+There are stil other factors to take in consideration. What to do if a read maps equally well to multiple genome regions? This will now depends a bit on the behavior on the alignment software. Usually, these cases are marked as having a low mapping quality, so we can simply ignore them by excluding alignments with a low mapping quality. But by ignoring these cases we're losing information, and in the case of large genomes with a lot of large duplicated regions, this can be problematic. Again, if we want to use this information, we need to take into consideration what the aligner software will do. For example, bwa randomly attributes a read to one of the sites, while hisat outputs all alignmens (up to a given limit of k equally good ones). 
+
+Some counting tools will actually use the information that a read aligns to different places to estimate the likelihood that a read belongs to one or the other, depending on the local (unique) coverage. This is in fact the type of approach Salmon uses to attribute reads to transcripts. Salmon does not output an exact number of reads per transcript, but the sum of the likelihoods of reads belonging to it (eg. a read may have 60% likelihood of belonging to a transcript, and thus will count not as 1, but as 0.6).
 
 Finally, how to avoid pcr artifacts? To be as safe as possible, we would remove duplicates to avoid pcr artifacts, and this frequently needs to be done before the counting process. Nonetheless, given that duplicates can be frequent in RNA-Seq, usually we do not remove them. Assuming that pcr artifacts occurr randomly, then we should not have the same artifact in different biological replicates. In any case, for genes that are very important to us, we should always also visually check the alignments using software such as IGV.
 
 
 ## <a id="LO7.2">LO 7.2 - Use tools such as htseq-counts and featurecounts to generate tables of gene counts</a>
 
-TODO TODO Specify the questions better...
+A popular tool to generate gene counts from SAM/BAM alignments and GFF/GTF gene annotations is [htseq-count](http://www-huber.embl.de/HTSeq). Its default behavior is to generate counts at the gene level. It assigns a read to a gene if it unambiguously overlaps at least one part of a cDNA produced by the gene. It ignores reads mapping equally well to multiple positions by requiring by default a minimum mapping quality. By default it assumes stranded libraries, so we need to explicitly mention unstranded. [Featurecounts](http://bioinf.wehi.edu.au/featureCounts/) is a program similar to htseq-counts, but much more efficient. Qualimap also has functionality to generate read counts. 
 
-A popular tool to generate gene counts from SAM/BAM alignments and GFF/GTF gene annotations is [htseq-count](http://www-huber.embl.de/HTSeq). Its default behavior is to generate counts at the gene level. It assigns a read to a gene if it unambiguously overlaps at least one part of a cDNA produced by the gene. It ignores reads mapping equally well to multiple positions by requiring by default a minimum mapping quality. By default it assumes stranded libraries, so we need to explicitly mention unstranded. [Featurecounts](http://bioinf.wehi.edu.au/featureCounts/) is a program similar to htseq-counts, but much more efficient.
+**TASK**: In galaxy, use htseq-counts with all samples of the guilgur dataset (unstranded) and the sample gtf file as the annotation. On the bottom of the galaxy htseq-count tool page, you can see the rules htseq uses to do the counting. Look at the different parameters of the tool. For this case, just change the strandness to 'No' and leave the rest of the parameters unchanged. Each htseq-count execution gives two results: one with the gene counts, and another with counts of reads that did not align, do not overlap a gene, or have ambiguous overlap or alignment. This second result serves also as a quality control.
 
-**TASK**: Use htseq-counts and Qualimap counts with the guilgur data (also use the sample gene annotations). Use the provided alignments (you may need to transform BAM to SAM to use with htseq-counts), and also try with your own alignments (obtained from the raw reads against a recent Drosophila genome). Try different parameters (namely related to strand and multiple mappings) and see the differences. Also check the effect of using an incorrect GTF file (not matching the correct genome version). 
+**TASK**: Run featurecounts in Galaxy with mut_lib1_R1.bam and compare with the htseq-count results [TODO: Check if the GALAXY in Pedro's room has feature counts]. Generate counts for the same file using Qualimap, and compapre with the previous two.
 
-**Task**: Run a Salmon "alignment" of the guilgur data against the sample transcriptome. Notice that no SAM/BAM is generated. Also compare results with the ones generated by htseq-counts. 
+**TASK**: In the commandline, run the command: 'htseq-count -f bam -r pos -s no mut_lib1_R1.bam Drosophila_melanogaster.BGP6.85.sample.gtf > mut_lib1_R1.htseq.counts'. Run 'htseq-count -h' to see all the options.
 
-**Task**: Run htseq-count (and/or Qualimap counts) and salmon for the Trapnell BAM files. (optional) Try with your own alignments, if you have them.
+**TASK**: In the commandline, run the command: 'featurecounts -a Drosophila_melanogaster.BGP6.85.sample.gtf -o mut_lib1_R1.feature.counts mut_lib1_R1.bam' [TODO: Confirm if the command works in Pedro's workstation]. Run 'featurecounts -h' to see all the options.
 
+**TASK**: (optional) Use featurecounts to generate tables of counts for the Trapnell dataset. Try with your own data, if you have. You can also try with htseq-counts and Qualimap. [TODO: Check if the GALAXY in Pedro's room has feature counts]
+
+## <a id="LO7.3">LO 7.3 - Use Salmon to generate counts with only the transcriptome</a>
+
+As mentioned previously, Salmon directly matches the raw reads against a fasta with the known transcriptome, directly generating a table of "counts". Since it assigns reads to transcripts probabilistically, the result is usually not an integer, but a fractional number. 
+
+**TASK**: In Galaxy, run Salmon with the guilgur data against the sample transcriptome (Drosophila_melanogaster.BGP6.88.sample.cdna.fa). Notice that no SAM/BAM is generated. Also compare results with the ones generated by htseq-counts. 
+
+**TASK**: Like for the other aligners, Salmon also needs to create an index. Run the command 'salmon index --transcripts Drosophila_melanogaster.BGP6.88.sample.cdna.fa --index  Drosophila_melanogaster.BGP6.88.sample.cdna.salmon'. Next, run the alignment using the command 'salmon quant --index  Drosophila_melanogaster.BGP6.88.sample.cdna.salmon -l A -r mut_lib1_R1.fq.gz -o mut_lib1_R1.salmon.counts'. [TODO: Verify that is running on the shell of Pedro's workstations]
+
+**TASK**: (optional) Use salmon to generate tables of counts for the Trapnell dataset. Try with your own data, if you have.
 
 # <a id="LO8">Learning Outcome 8: Generate lists of differentially expressed genes, at least for a simple pairwise comparison</a>
 
