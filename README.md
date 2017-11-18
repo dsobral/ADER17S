@@ -112,12 +112,14 @@ For this, we are providing small example datasets and exercises that participant
 		Interpret general alignment statistics such as percentage of aligned reads
 		Check the reports to assess RNA integrity and diversity
 
-### LO 7 - Generate tables of counts using the alignment and a reference gene annotation
+### LO 7 - Generate tables of counts
 
 #### 	LO 7.1 - The process of generating gene counts from genome aligments
 		What parameters we need to consider when counting
 
 #### 	LO 7.2 - Use tools such as htseq-counts and featurecounts to generate table of gene counts
+
+#### 	LO 7.3 - Using Salmon to generate counts only with the transcriptome
 
 ### LO 8 - Generate lists of differentially expressed genes, at least for a simple pairwise comparison
 
@@ -166,7 +168,7 @@ For this, we are providing small example datasets and exercises that participant
 + 11:00 - 11:30 ***Coffee Break***
 + 11:30 - 12:30 [Use tools such as RSeQC and Qualimap to assess quality of alignments]((material/ADER17_practical.md#LO6.3)).
 + 12:30 - 14:00 ***LUNCH BREAK***
-+ 14:00 - 16:00 [The process of generating gene counts from genome aligments](material/ADER17_practical.md#LO7.1). [Use tools such as htseq-counts and featurecounts to generate tables of gene counts](material/ADER17_practical.md#LO7.2).
++ 14:00 - 16:00 [The process of generating gene counts from genome aligments](material/ADER17_practical.md#LO7.1). [Use tools such as htseq-counts and featurecounts to generate tables of gene counts](material/ADER17_practical.md#LO7.2). [Use Salmon to generate counts using only the transcriptome](material/ADER17_practical.md#LO7.3).
 + 16:00 - 16:30 ***Tea Break***
 + 16:30 - 18:00 [Using the R package edgeR and DESeq2 in Galaxy to produce a pairwise differential expression analysis](material/ADER17_practical.md#LO8.1)
 
