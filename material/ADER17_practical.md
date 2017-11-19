@@ -385,21 +385,25 @@ So far, we just considered the simple case of pairwise comparison, where all sam
 
 The [edgeR manual](https://www.bioconductor.org/packages/devel/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf) contains several examples that explore these issues. In the pairwise case, the statistical methods are comparable to a t-test or a fisher exact test. Generalized Linear Models (GLM) allow to include information from several variables simultaneously. The simple pairwise case can also be considered as a GLM, although the statistical methods applied for the test are different than in the "classic" pairwise model. 
 
-In a first example, we have a classic paired test, with tumor and normal samples for one same case. In a second example, we have a treatment, but the samples were obtained in three different moments in time (batches), and this may influence the result.
+**TASK**: In a first example, we have a classic paired test, with tumor and normal samples for one same case. Let's first try a simple pairwise comparison, ignoring the pairing. In Galaxy, upload the file 'edgeR_example1_Tuch.tab'. First, make the design matrix using the tool "edgeR: Design [...]". Define the main Factor we're interested in (Disease), dividing it in two Factor Levels (Tumor, and Normal). For each of the levels, select the appropriate count columns from the edgeR_example1_Tuch.tab table (you need to select it as Expression Matrix). Click execute (you should now create a design matrix that attributes a group to each of the samples). Now, select the tool "edgeR: Differential Gene(Expression) Analysis". Select Multigroup as the "Analysis type". Select edgeR_example1_Tuch.tab as the expression matrix and the design matrix you previously created. As contrast, type "Tumor-Normal" (make sure you use the same names you used for the design matrix). Select a few plots (you also need to select the pdf output to visualize them).
 
-**Task**: In Galaxy, use edgeR with the files provided for example1 and example2. In both cases, include paired/block information. Compare the difference with and without this information.
+**TASK**: Now let's add the pairing information. Create another Design Matrix similar to the previous one, but where you also Define Blocking. Name the blocking condition 'Patients' (although you can name it as you like). Make each patient one block and select for each block the columns corresponding to that patient (in this case you have three patients). Inspect the design matrix that was created. Now, run the differential gene expression the same way as before, but with the new design matrix. Compare the results with the previous one.
 
-**Task**: In Galaxy, use edgeR to perform a pairwise comparison with the htseq-count results you obtained for your complete dataset. You will need to transform the htseq-count results into something edgeR can use.
+**Question**: Do you have more or less differentially expressed genes?
+
+**TASK**: In a second example, we want to see the effect of a treatment, but where the samples were obtained in three different moments in time (batches). Upload the file 'edgeR_example2_Cumbie.tab' to Galaxy. Use edgeR to compare treatment (hrcc) versus mock treatment (mock). As before, make first a design matrix without taking the batch effect into consideration. Look at PCoA/MDS plot and Hierarchical clustering plots to see the batch effect. Next, make time as a block in the design and redo the test.
+
+**TASK**: In Galaxy, use edgeR to perform a pairwise comparison with the count results you obtained for your complete dataset (if you don't have one, use the Trapnell dataset). Apply any pairing or batch effects that make sense for your case (In the Trapnell case, you may try replicate as a batch effect). You will need to transform the htseq-count results into something edgeR can use. Namely, you'll need to concatenate all counts in one single file, and add a header. For convenience, the Trapnell dataset has already been transformed into a table that can be used in edgeR. [TODO: Check if there is some new tool that makes it easier to create a count matrix ready for edgeR.]
 		
 The tools available in Galaxy are limited in terms of the ability to express more complex experimental designs. For this, we need to go to R and explore all the flexibility that it allows.
 		
-**Task**: Try the example1 and example2 using edgeR in R. For this, use the R script provided.
+**TASK**: In Rstudio, open trapnell_edgeR.R and run the commands that are inside. Run also edgeR_example1_Tuch.R and edgeR_example2_Cumbie.R.
 
-The final example we will explore contains several factors, and one of the factors have 3 different possible values. This introduces many possibilities of experimental questions to test. We just need to decide which ones are relevant biological questions.
+The final example we will explore contains several factors, and one of the factors have 3 different possible values. This introduces many possibilities of experimental questions to test. We just need to decide which ones are relevant biological questions. To define which questions make sense, it is usually best to start with the use of unbiased exploratory tools such as PCoA and Hierarchical clustering. 
 
-**Task**: Try the example4 using edgeR in R. For this, use the R script provided.
+**TASK**: [TODO: Add some more explanation here about the dataset.] Try the example4 using edgeR in R. For this, use the R script provided.
 
-**Task**: Based on what you did before, prepare a table of non-normalized counts for your complete dataset and analyse it using edgeR in R. 
+TODO: Check which questions make sense to ask, particularly for the last example. Try to see if I can add some example of time-series. Also some example of clustering. WGCNA? 
 
 # <a id="LO9">Learning Outcome 9 - Perform simple functional enrichment analysis and understand the concepts involved</a>
 
