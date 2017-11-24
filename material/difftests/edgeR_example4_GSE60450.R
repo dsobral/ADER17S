@@ -1,3 +1,4 @@
+library(edgeR)
 rawdata <- read.delim("edgeR_example4_GSE60450_Lactation-GenewiseCounts.tab", header=TRUE)
 row.names(rawdata)<-rawdata$EntrezGeneID
 metadata <- read.delim("edgeR_example4_GSE60450_Lactation_metadata.tab", header=TRUE)
