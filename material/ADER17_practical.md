@@ -401,9 +401,8 @@ The tools available in Galaxy are limited in terms of the ability to express mor
 
 The final example we will explore contains several factors, and one of the factors have 3 different possible values. This introduces many possibilities of experimental questions to test. We just need to decide which ones are relevant biological questions. To define which questions make sense, it is usually best to start with the use of unbiased exploratory tools such as PCoA and Hierarchical clustering. 
 
-**TASK**: [TODO: Add some more explanation here about the dataset.] Try the example4 using edgeR in R. For this, use the R script provided.
+**TASK**: In Rstudio, run edgeR_example4_GSE60450.R.
 
-TODO: Check which questions make sense to ask, particularly for the last example. Try to see if I can add some example of time-series. Also some example of clustering. WGCNA? 
 
 # <a id="LO9">Learning Outcome 9 - Perform simple functional enrichment analysis and understand the concepts involved</a>
 
