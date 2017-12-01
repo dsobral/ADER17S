@@ -222,7 +222,11 @@ In the guilgur folder, you'll have data extracted from [Guilgur et al, 2014](htt
 
 **TASK**: Run the command 'hisat2-build' with the Drosophila genome you downloaded previously. If you have another genome of interest, do it also with that genome.
 
-**TASK** Run the command 'hisat2' to align one of the guilgur datasets eg. mut_lib1_R1.fq.gz. Notice that Hisat2 on the command line generates a sam file.
+**Hint**: The command should be of the form 'hisat2-build genome.fasta genome.hisat2index'. Type 'hisat2-build -h' for more information on parameters.
+
+**TASK**: Run the command 'hisat2' to align one of the guilgur datasets eg. mut_lib1_R1.fq.gz. Notice that Hisat2 on the command line generates a sam file.
+
+**Hint**: For unpaired reads, the command should be of the form 'hisat2 -x genome.hisat2index -U reads.fastq > output.sam'. Type 'hisat2 -h' for more info on parameters.
 
 **Hint** To convert a sam file to bam, you need samtools. You can combine samtools with hisat to generate a BAM file immediately: 'hisat2 -x Drosophila_melanogaster.BDGP6.dna.toplevel.hisat2 -U mut_lib1_R1.fq.gz | samtools view -Sb - | samtools sort - -o mut_lib1_R1.bam; samtools index mut_lib1_R1.bam'.
 
