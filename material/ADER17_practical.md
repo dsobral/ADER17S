@@ -160,7 +160,7 @@ Paired-end data need to be handled with special care. Some quality filtering sof
 
 **TASK**: In the same commandline, run the following command: 'cutadapt --help'. Inspect the options. Next, run: 'cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC -o sample_adaptors.trimmed.fastq sample_adaptors.fastq.gz'.
 
-**TASK**: Run the following command: 'TrimmomaticSE sample_quality_and_adaptors.fastq.gz sample_quality_and_adaptors.trimmed.v2.fastq SLIDINGWINDOW:4:20 ILLUMINACLIP:NexteraPE-PE:2:30:10'.   TODO: check where the fasta with. Also Add Ricardo's set just in case. TODO.
+**TASK**: Run the following command: 'TrimmomaticSE sample_quality_and_adaptors.fastq.gz sample_quality_and_adaptors.trimmed.v2.fastq SLIDINGWINDOW:4:20 ILLUMINACLIP:adapters/NexteraPE-PE.fa:2:30:10'.
 
 **TASK**: (optional) If you have your own data, you can try running FastQC and eventually Trimmomatic on your data.
 
