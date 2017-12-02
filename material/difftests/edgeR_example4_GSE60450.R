@@ -51,7 +51,7 @@ Rkeys(org.Mm.egGO2ALLEGS) <- cyt.go
 ind <- ids2indices(as.list(org.Mm.egGO2ALLEGS), fit$genes$EntrezGeneID)
 
 con <- makeContrasts(B.virgin-B.lactate, levels=design)
-fr <- fry(y, index=ind, design=design, contrast=con)
+#fr <- fry(y, index=ind, design=design, contrast=con)
 
 res <- glmQLFTest(fit, contrast=con)
 barcodeplot(res$table$logFC, ind[[1]], main=names(ind)[1])
