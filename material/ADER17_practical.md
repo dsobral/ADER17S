@@ -298,6 +298,8 @@ The same way FastQC generates reports of fastq files to assess quality of raw da
 
 **TASK**: In galaxy, run the tool 'Gene Body Coverage (BAM)' with mut_lib1 of the guilgur datasets. Use as reference 'Drosophila_melanogaster.BGP6.85.sample.bed'.
 
+**Hint**: You need to make sure the bed file is of the type 'bed'. If necessary, explicitly change the type, like you may have done for the fastq files.
+
 **TASK**: Run the command in the guilgur folder: 'geneBody_coverage.py -r Drosophila_melanogaster.BGP6.85.sample.bed -i mut_lib1_R1.bam -o mut_lib1_R1.genebody'. Then, run also 'read_distribution.py  -i mut_lib1_R1.bam -r Drosophila_melanogaster.BGP6.85.sample.bed'.
 
 **TASK**: Run a Qualimap RNA-Seq report with one of the Trapnell BAM files (use the full Drosophila annotation). Try with your own samples, if you have them. (optional) Run the RSeQC gene body coverage and other reports. Some RSeqQC reports may take time with real datasets, so take care to run only one at a time during the day.
