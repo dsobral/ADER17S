@@ -292,6 +292,8 @@ The same way FastQC generates reports of fastq files to assess quality of raw da
 
 **TASK**: Run the command in the guilgur folder: 'qualimap rnaseq -bam mut_lib1_R1.bam -gtf Drosophila_melanogaster.BGP6.85.sample.gtf'.
 
+**Hint**: The BAM file is the one you generated in Galaxy or in using the commandline, so you may need to adjust its name and location accordingly. Alternatively, rename you file and place it in the same folder as the gtf file.
+
 [RSeqC](http://rseqc.sourceforge.net/) provide a set of tools to produce RNA-Seq specific reports.  
 
 **TASK**: In galaxy, run the tool 'Gene Body Coverage (BAM)' with mut_lib1 of the guilgur datasets. Use as reference 'Drosophila_melanogaster.BGP6.85.sample.bed'.
