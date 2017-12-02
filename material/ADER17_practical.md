@@ -329,9 +329,9 @@ A popular tool to generate gene counts from SAM/BAM alignments and GFF/GTF gene 
 
 **TASK**: In the commandline, run the command: 'htseq-count -f bam -r pos -s no mut_lib1_R1.bam Drosophila_melanogaster.BGP6.85.sample.gtf > mut_lib1_R1.htseq.counts'. Run 'htseq-count -h' to see all the options.
 
-**TASK**: In the commandline, run the command: 'featurecounts -a Drosophila_melanogaster.BGP6.85.sample.gtf -Q 10 -o mut_lib1_R1.feature.counts mut_lib1_R1.bam'. Run 'featurecounts -h' to see all the options.
+**TASK**: In the commandline, run the command: 'featureCounts -a Drosophila_melanogaster.BGP6.85.sample.gtf -Q 10 -o mut_lib1_R1.feature.counts mut_lib1_R1.bam'. Run 'featurecounts -h' to see all the options.
 
-**TASK**: Use featurecounts to generate tables of counts for the Trapnell dataset. (optional) Try with your own data, if you have. You can also try with htseq-counts and Qualimap.
+**TASK**: Use featureCounts to generate tables of counts for the Trapnell dataset. (optional) Try with your own data, if you have. You can also try with htseq-counts and Qualimap.
 
 ## <a id="LO7.3">LO 7.3 - Use Salmon to generate counts with only the transcriptome</a>
 
