@@ -257,6 +257,8 @@ To visualize the alignments along the reference genome one can use software such
 
 **TASK**: Download the BAM files you generated for the guilgur dataset in Galaxy ![download](images/download.jpg). You also need to download the companion bai index files that accompany each of the BAM files. These bai index files are essential to quickly access alignments inside the BAM file. Run IGV and load the Drosophila genome as reference (fasta). Next load the provided annotation file (Drosophila_melanogaster.BDGP6.85.sample.gtf) inside the guilgur folder which contains information just for a subset of genes. Finally, load the BAM alignment files. 
 
+**Hint**: To run IGV, you can open a terminal, and type 'igv'. It will then take a little bit to start.
+
 **TASK**: In IGV, look at position: 3L:15041314-15044195 (alternatively, look for the gene Rpn12R, or Fbgn0036465). What can you see? 
 
 **TASK**: In IGV, look at position: X:20689286-20698941 (alternatively, look for the gene run, or FBgn0003300). What can you see? 
