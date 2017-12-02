@@ -46,7 +46,7 @@ hist(resHTSeq$pvalue, breaks=0:50/50, xlab="p value", main="Histogram of uncorre
 
 #Does a variant stabilization procedure useful for some plotting and clustering
 #NOT to be used for differential analysis
-vsd <- vst(ddsHTSeq, blind=FALSE)
+vsd <- varianceStabilizingTransformation(ddsHTSeq, blind=FALSE)
 
 #Plot PCA
 plotPCA(vsd, intgroup=c("condition"))
