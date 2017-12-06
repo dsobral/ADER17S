@@ -465,7 +465,7 @@ Because GO is hierarchic, performing enrichment analysis across GO requires a hi
 
 There are several GO enrichment analysis tools available, for instance:
 - Webtools: GOrilla (http://cbl-gorilla.cs.technion.ac.il/), GO’s own tool (http://www.geneontology.org/page/go-enrichment-analysis)
-- Galaxy/stand-alone tools: GOEnrichment [IGC]; Ontologizer [test toolbox]
+- Galaxy/Command Line tools: GOEnrichment [IGC Galaxy](https://github.com/DanFaria/GOEnrichment); Ontologizer [Galaxy test toolbox](http://ontologizer.de/)
 - R tools: gsea, GOstats, topGO
 
 **Task**: Run an enrichment analysis test on GOrilla. Use the FEA_dataset1 from the Git repository, which contains the overexpressed genes from the Drosophila melanogaster dataset with 300 random genes differentially expressed. Choose “Two unranked lists of genes” as the running mode; paste or upload the study set into “target set” and the population set into “background set”. Use the biological process ontology, then repeat the analysis for the molecular function ontology.
