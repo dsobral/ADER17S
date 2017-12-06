@@ -58,20 +58,51 @@ table(topgenes$table$FDR<0.05)
 #Let's try again
 y <- DGEList(counts=rawdata[,3:14], genes=rawdata[,1:2])
 y <- calcNormFactors(y)
-design <- model.matrix(~ CellType + Status, data=metadata)
+design <- model.matrix(~ Status + CellType, data=metadata)
+design
+y <- estimateDisp(y, design, robust=TRUE)
+#The fitting here is by block
+fit <- glmFit(y, design)
+lrt <- glmLRT(fit)
+topgenes<-topTags(lrt, n=dim(rawdata)[[1]])
+table(topgenes$table$FDR<0.05)
+
+
+#Let's try again
+y <- DGEList(counts=rawdata[,3:14], genes=rawdata[,1:2])
+y <- calcNormFactors(y)
+design <- model.matrix(~ CellType*Status, data=metadata)
+design
+y <- estimateDisp(y, design, robust=TRUE)
+#The fitting here is by block
+fit <- glmFit(y, design)
+lrt <- glmLRT(fit, coef = 5:6)
+topgenes<-topTags(lrt, n=dim(rawdata)[[1]])
+table(topgenes$table$FDR<0.05)
+
+
+#Let's try again
+y <- DGEList(counts=rawdata[,3:14], genes=rawdata[,1:2])
+y <- calcNormFactors(y)
+design <- model.matrix(~ CellType:Status, data=metadata)
+design
+#This will not work, because it does not have interactions for all combinations...
+#Only blocked
+y <- estimateDisp(y, design, robust=TRUE)
 
 
 
-group <- factor(paste0(metadata$CellType, ".", metadata$Status))
+#Let's try again
 y <- DGEList(counts=rawdata[,3:14], genes=rawdata[,1:2], group=group)
 colnames(y) <- metadata$Sample
-require(org.Mm.eg.db)
-names <- select(org.Mm.eg.db,keys=rownames(y),columns="SYMBOL")
-y$genes$name<-names$SYMBOL
-keep <- rowSums(cpm(y) > 0.5) >= 2
-y <- y[keep, , keep.lib.sizes=FALSE]
 
+#This is to remove non-expressed genes - optional
+#keep <- rowSums(cpm(y) > 0.5) >= 2
+#y <- y[keep, , keep.lib.sizes=FALSE]
 
+#Here I'm creating a new variable...
+group <- factor(paste0(metadata$CellType, ".", metadata$Status))
+#Plottinh the MDS, decorated with the values of the variable
 points <- c(0,1,2,15,16,17)
 colors <- rep(c("blue", "darkgreen", "red"), 2)
 plotMDS(y, col=colors[group], pch=points[group])
@@ -79,28 +110,43 @@ legend("topleft", legend=levels(group), pch=points, col=colors, ncol=2)
 
 design <- model.matrix(~ 0 + group)
 colnames(design) <- levels(group)
+design
 y <- estimateDisp(y, design, robust=TRUE)
 plotBCV(y)
 
+#This is an alternative Fitting function using a different approach than glmFit
+#It is more stringent than glmFit
 fit <- glmQLFit(y, design, robust=TRUE)
+#Only has 2 replicates each
 con <- makeContrasts(B.pregnant - B.lactate, levels=design)
 qlf <- glmQLFTest(fit, contrast=con)
+topgenes<-topTags(qlf, n=dim(rawdata)[[1]])
+table(topgenes$table$FDR<0.05)
+
+#A few new functions that may be usefull...
 is.de <- decideTestsDGE(qlf, p.value=0.05)
 plotSmear(qlf, de.tags=rownames(qlf)[is.de!=0])
 #Deciding extra condition of logfc
 tr <- glmTreat(fit, contrast=con, lfc=log2(1.2))
 topTags(tr)
 
-#ANOVA-Like for L samples 
+#ANOVA-Like for L samples (it tests if any of these combinations has logFC != 0)
 con <- makeContrasts(L.PvsL = L.pregnant - L.lactate, L.VvsL = L.virgin - L.lactate, L.VvsP = L.virgin - L.pregnant, levels=design)
 anov <- glmQLFTest(fit, contrast=con)
+topgenes<-topTags(anov, n=dim(rawdata)[[1]])
 topTags(anov)
+
+
 
 #Functional Enrichment
 con <- makeContrasts(B.lactate - B.pregnant, levels=design)
 qlf <- glmQLFTest(fit, contrast=con)
 go <- goana(qlf, species = "Mm")
 topGO(go, n=30)
+
+require(org.Mm.eg.db)
+names <- select(org.Mm.eg.db,keys=rownames(y),columns="SYMBOL")
+y$genes$name<-names$SYMBOL
 
 #Looking for specific Pathway enrichment
 library(GO.db)

@@ -1,5 +1,29 @@
 rawdata <- read.delim("edgeR_example1_Tuch.tab", check.names=FALSE, stringsAsFactors=FALSE)
+
 library(edgeR)
+
+#Classic approach
+y <- DGEList(counts=rawdata[,2:7], genes=rawdata[,1],group=c("N","T","N","T","N","T"))
+y <- calcNormFactors(y)
+y <- estimateDisp(y)
+et <- exactTest(y)
+topgenes<-topTags(et,n=dim(rawdata)[[1]])
+table(topgenes$table$FDR<0.05)
+
+#GLM approach without pairing info
+y <- DGEList(counts=rawdata[,2:7], genes=rawdata[,1])
+y <- calcNormFactors(y)
+Tissue <- factor(c("N","T","N","T","N","T"))
+design <- model.matrix(~Tissue)
+rownames(design) <- colnames(y)
+y <- estimateDisp(y, design, robust=TRUE)
+fit <- glmFit(y, design)
+lrt <- glmLRT(fit)
+topgenes<-topTags(lrt,n=dim(rawdata)[[1]])
+table(topgenes$table$FDR<0.05)
+
+
+#GLM approach WITH pairing info
 y <- DGEList(counts=rawdata[,2:7], genes=rawdata[,1])
 
 #Optional annotation part... important for the functional enrichment step...
@@ -34,6 +58,10 @@ plotBCV(y)
 fit <- glmFit(y, design)
 lrt <- glmLRT(fit)
 topTags(lrt)
+
+topgenes<-topTags(lrt,n=dim(rawdata)[[1]])
+table(topgenes$table$FDR<0.05)
+
 o <- order(lrt$table$PValue)
 cpm(y)[o[1:10],]
 summary(de <- decideTestsDGE(lrt))
