@@ -1,7 +1,67 @@
+
 library(edgeR)
 rawdata <- read.delim("edgeR_example4_GSE60450_Lactation-GenewiseCounts.tab", header=TRUE)
 row.names(rawdata)<-rawdata$EntrezGeneID
+y <- DGEList(counts=rawdata[,3:14], genes=rawdata[,1:2])
+y <- calcNormFactors(y)
+y$samples
+plotMDS(y,method = "logFC")
+#This is NOT the same as the BCV associated to the logFC between groups
+plotMDS(y,method = "bcv")
+#If you want to know more...
+?edgeR::plotMDS.DGEList
+
 metadata <- read.delim("edgeR_example4_GSE60450_Lactation_metadata.tab", header=TRUE)
+
+design <- model.matrix(~ CellType, data=metadata)
+design
+rownames(design) <- colnames(y)
+y <- estimateDisp(y, design, robust=TRUE)
+#These two lines are the "equivalent" to the exact test in the classical model
+#But this is fitting a linear model to the data, iteratively improving it (fit)
+fit <- glmFit(y, design)
+lrt <- glmLRT(fit)
+
+#Genes obtained here is equivalent to pairwise CellTypeL - CellTypeB != 0 (6 replicates each)
+topgenes<-topTags(lrt, n=dim(rawdata)[[1]])
+table(topgenes$table$FDR<0.05)
+
+
+
+#Let's try again
+y <- DGEList(counts=rawdata[,3:14], genes=rawdata[,1:2])
+y <- calcNormFactors(y)
+design <- model.matrix(~ 0 + CellType, data=metadata)
+design
+y <- estimateDisp(y, design, robust=TRUE)
+fit <- glmFit(y, design)
+lrt <- glmLRT(fit)
+
+# This is equivalent to CellTypeL - 0 != 0 (6 replicates) - so almost ALL genes are different!
+topgenes<-topTags(lrt, n=dim(rawdata)[[1]])
+table(topgenes$table$FDR<0.05)
+
+
+
+#Let's try again
+y <- DGEList(counts=rawdata[,3:14], genes=rawdata[,1:2])
+y <- calcNormFactors(y)
+design <- model.matrix(~ 0 + CellType, data=metadata)
+con <- makeContrasts(CellTypeL - CellTypeB, levels=design)
+y <- estimateDisp(y, design, robust=TRUE, contrasts=con)
+fit <- glmFit(y, design)
+lrt <- glmLRT(fit, contrast = con)
+topgenes<-topTags(lrt, n=dim(rawdata)[[1]])
+table(topgenes$table$FDR<0.05)
+
+
+#Let's try again
+y <- DGEList(counts=rawdata[,3:14], genes=rawdata[,1:2])
+y <- calcNormFactors(y)
+design <- model.matrix(~ CellType + Status, data=metadata)
+
+
+
 group <- factor(paste0(metadata$CellType, ".", metadata$Status))
 y <- DGEList(counts=rawdata[,3:14], genes=rawdata[,1:2], group=group)
 colnames(y) <- metadata$Sample
