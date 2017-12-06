@@ -464,8 +464,8 @@ QUESTION: Why do we need multiple test corrections? What is the difference betwe
 Because GO is hierarchic, performing enrichment analysis across GO requires a high number of tests, but not that many of them are independent. Thus, multiple test correction methods overestimate the likelihood of error. One way to reduce this effect is to not make redundant tests. For instance, if the frequencies of “protein binding” and its parent “binding” in your study set are the same, testing “binding” is redundant − the test can only be positive if the test of “protein binding” is positive, and the latter is more informative than the former.
 
 There are several GO enrichment analysis tools available, for instance:
-- Webtools: GOrilla (http://cbl-gorilla.cs.technion.ac.il/), GO’s own tool (http://www.geneontology.org/page/go-enrichment-analysis)
-- Galaxy/Command Line tools: GOEnrichment [IGC Galaxy](https://github.com/DanFaria/GOEnrichment); Ontologizer [Galaxy test toolbox](http://ontologizer.de/)
+- Webtools: [GOrilla](http://cbl-gorilla.cs.technion.ac.il/), [GO’s own tool](http://www.geneontology.org/page/go-enrichment-analysis)
+- Galaxy/Command Line tools: [GOEnrichment](https://github.com/DanFaria/GOEnrichment) (IGC Galaxy); [Ontologizer](http://ontologizer.de/) (Galaxy test toolbox)
 - R tools: gsea, GOstats, topGO
 
 **Task**: Run an enrichment analysis test on GOrilla. Use the FEA_dataset1 from the Git repository, which contains the overexpressed genes from the Drosophila melanogaster dataset with 300 random genes differentially expressed. Choose “Two unranked lists of genes” as the running mode; paste or upload the study set into “target set” and the population set into “background set”. Use the biological process ontology, then repeat the analysis for the molecular function ontology.
